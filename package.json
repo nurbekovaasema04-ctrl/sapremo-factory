@@ -1,11 +1,14 @@
 {
-  "name": "sapremo-frontend",
+  "homepage": "[https://nurbekovaasema04-ctrl.github.io/sapremo-factory](https://nurbekovaasema04-ctrl.github.io/sapremo-factory)",
+  "name": "sapremo-factory",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "predeploy": "npm run build",
+    "build": "vite build",
+    "deploy": "gh-pages -d dist",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\"",
     "preview": "vite preview"
