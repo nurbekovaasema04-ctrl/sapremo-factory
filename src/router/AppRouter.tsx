@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Mainlayout from "../layouts/Mainlayouts";
 import DashboardPage from "../pages/DashboardPage";
 import ShipmentsPage from "../pages/ShipmentPage";
@@ -9,34 +9,25 @@ import LoginPage from "../pages/LoginPage";
 import AnalyticsPage from "../pages/AnalyticsPage";
 import ReportsPage from "../pages/ReportsPage";
 
-const router = createBrowserRouter(
-  [
-    {
-      path: "/",
-      element: <Mainlayout />,
-      children: [
-        {
-          element: <ProtectedRoute allowedRoles={["admin", "manager"]} />,
-          children: [
-            { path: "/", element: <DashboardPage /> },
-            { path: "/shipments", element: <ShipmentsPage /> },
-            { path: "/warehouses", element: <WarehousePage /> },
-            { path: "/finance", element: <FinancePage /> },
-            { path: "/analytics", element: <AnalyticsPage /> },
-            { path: "/reports", element: <ReportsPage /> },
-          ],
-        }, 
-      ],
-    },
-    {
-      path: "/login",
-      element: <LoginPage />,
-    },
-  ],
-  {
-    basename: "/sapremo-factory",
-  }
-);
 export default function AppRouter() {
-  return <RouterProvider router={router} />; // используем маленькую 'r'
+  return (
+    <HashRouter>
+      <Routes>
+        {/* Родительский Layout */}
+        <Route element={<ProtectedRoute allowedRoles={["admin", "manager"]} />}>
+          <Route path="/" element={<Mainlayout />}>
+            <Route index element={<DashboardPage />} />
+            <Route path="shipments" element={<ShipmentsPage />} />
+            <Route path="warehouses" element={<WarehousePage />} />
+            <Route path="finance" element={<FinancePage />} />
+            <Route path="analytics" element={<AnalyticsPage />} />
+            <Route path="reports" element={<ReportsPage />} />
+          </Route>
+        </Route>
+        
+        {/* Отдельный путь для логина */}
+        <Route path="login" element={<LoginPage />} />
+      </Routes>
+    </HashRouter>
+  );
 }
